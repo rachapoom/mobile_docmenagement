@@ -189,10 +189,10 @@ class _HomeScreen2 extends State {
                  onChanged: (text) {
           text = text.toLowerCase();
           setState(() {
-            _notesForDisplay = _notes.where((note) {
-              var noteTitle = note.title.toLowerCase();
-              return noteTitle.contains(text);
-            }).toList();
+            // _notesForDisplay = _notes.where((note) {
+            //   var noteTitle = note.title.toLowerCase();
+            //   return noteTitle.contains(text);
+            // }).toList();
           });
                 controller: editingController;
                 decoration: InputDecoration(

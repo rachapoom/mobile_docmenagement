@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_docmenagement/register.dart';
 import 'package:mobile_docmenagement/home.dart';
-import 'package:mobile_docmenagement/test.dart';
-import 'package:mobile_docmenagement/test2.dart';
 import 'package:mobile_docmenagement/test3.dart';
+import 'package:mobile_docmenagement/test3.dart' as prefix0;
+import 'package:mobile_docmenagement/test4.dart';
+import 'package:mobile_docmenagement/test5.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -75,7 +76,7 @@ class _DocApp extends State {
             child: RaisedButton(
               onPressed: () => {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext) => HomeScreen2()))
+                    builder: (BuildContext) => HomeScreen5()))
               },
               color: Colors.green,
               padding: EdgeInsets.all(15.0),
