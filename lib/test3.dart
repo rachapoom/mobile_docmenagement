@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_docmenagement/detail_user.dart';
 import 'package:mobile_docmenagement/document.dart';
@@ -25,10 +24,10 @@ class HomeScreen2 extends StatefulWidget {
 }
 
 class _HomeScreen2 extends State {
-  String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
+  String filteredUser(String s) => s[0].toUpperCase() + s.substring(1);
 
-  List<User> users = List();
-  List<User> filteredUser = List();
+  List<User> users = List<User>();
+  List<User> filteredUser1 = List<User>();
 
   Future<List<User>> userDetails() async {
     if (users.length == 0) {
@@ -49,8 +48,8 @@ class _HomeScreen2 extends State {
       }
     }
     setState(() {
-      filteredUser = users;
-      itemDup = ["ECP3N"];
+      filteredUser1 = users;
+      // itemDup = ["ECP3N"];
     });
     return users;
   }
@@ -106,13 +105,13 @@ class _HomeScreen2 extends State {
 
   @override
   void initState() {
-    items.addAll(itemDup);
+    items.addAll(duplicateItems);
     super.initState();
   }
 
   void filterSearchResults(String query) {
     List<String> dummySearchList = List<String>();
-    dummySearchList.addAll(itemDup);
+    dummySearchList.addAll(duplicateItems);
     if (query.isNotEmpty) {
       List<String> dummyListData = List<String>();
       dummySearchList.forEach((item) {
@@ -128,7 +127,7 @@ class _HomeScreen2 extends State {
     } else {
       setState(() {
         items.clear();
-        items.addAll(itemDup);
+        items.addAll(duplicateItems);
       });
     }
   }
@@ -187,24 +186,22 @@ class _HomeScreen2 extends State {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                onChanged: (String) {
-                  setState(() {
-                    var string;
-                    filteredUser = users
-                        .where((u) => (u.groupName
-                            .toLowerCase()
-                            .contains(string.toLowercase)))
-                        .toList();
-                  });
-                },
-                controller: editingController,
+                 onChanged: (text) {
+          text = text.toLowerCase();
+          setState(() {
+            _notesForDisplay = _notes.where((note) {
+              var noteTitle = note.title.toLowerCase();
+              return noteTitle.contains(text);
+            }).toList();
+          });
+                controller: editingController;
                 decoration: InputDecoration(
                     labelText: "Search",
                     hintText: "Search",
                     prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(25.0)))),
-              ),
+                        borderRadius: BorderRadius.all(Radius.circular(25.0))));
+                 }),
             ),
             Expanded(
                 child: new FutureBuilder(
@@ -218,14 +215,15 @@ class _HomeScreen2 extends State {
                         );
                       } else {
                         return ListView.builder(
-                          itemCount: filteredUser.length,
+                          itemCount: filteredUser1.length,
                           itemBuilder: (BuildContext context, int index) {
                             return new Column(
                               children: <Widget>[
                                 ListTile(
                                   leading: Image.asset("images/group.png"),
                                   title: Text(
-                                    capitalize(filteredUser[index].groupName),
+                                    filteredUser(
+                                        filteredUser1[index].groupName),
                                     style: new TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -233,12 +231,12 @@ class _HomeScreen2 extends State {
                                   subtitle: Text("12-3343-44"),
                                   trailing: Icon(Icons.arrow_drop_down),
                                   onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => DocumentScreen(),
-                                      ),
-                                    );
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (BuildContext) =>
+                                                DocumentScreen(
+                                                  valueFromHome: "xxxx",
+                                                )));
                                   },
                                   onLongPress: () {
                                     _askedToLead();
@@ -259,10 +257,8 @@ class _HomeScreen2 extends State {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext) => DocumentScreen(
-                    valueFromHome: "xxxx",
-                  )))
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (BuildContext) => AddGroupScreen()))
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.blue,
@@ -271,7 +267,7 @@ class _HomeScreen2 extends State {
   }
 }
 
-String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
+String filteredUser(String s) => s[0].toUpperCase() + s.substring(1);
 
 class User {
   final int index;

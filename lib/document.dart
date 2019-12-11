@@ -12,7 +12,7 @@ void main() {
 }
 
 class DocumentScreen extends StatefulWidget {
-  final String valueFromHome;
+  final String valueFromHome ;
   DocumentScreen({Key key, this.valueFromHome}) : super(key: key);
 
   @override
@@ -22,7 +22,7 @@ class DocumentScreen extends StatefulWidget {
 }
 
 class _DocumentScreen extends State {
-   String valueFromHome;
+  String valueFromHome;
   _DocumentScreen(this.valueFromHome);
 
   Future<void> _askedToLead() async {
@@ -61,7 +61,6 @@ class _DocumentScreen extends State {
 
   @override
   void initState() {
-   
     print(valueFromHome);
     items.addAll(duplicateItems);
     super.initState();
@@ -96,7 +95,7 @@ class _DocumentScreen extends State {
 
   @override
   Widget build(BuildContext context) {
-    var valueFromHome;
+    
     return Scaffold(
       appBar: AppBar(
         title: Text("หน้าเอกสาร"),
@@ -128,7 +127,7 @@ class _DocumentScreen extends State {
                     ListTile(
                         leading: Image.asset("images/document.png"),
                         title: Text(
-                          "${items[index]}",
+                          "${this.valueFromHome}",
                           style: new TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
